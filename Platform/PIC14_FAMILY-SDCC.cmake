@@ -1,10 +1,18 @@
-﻿#===--PIC14_FAMILY-SDCC.cmake - Archivo de soporte de compilador para CMake  --------------------------*- CMake -*-===//
+﻿#===-- Platform/PIC14_FAMILY-SDCC.cmake - Archivo de soporte de compilador para CMake  ----------------*- CMake -*-===//
 #
 # Copyright (c) 2018 Oever González
 #
-# Todos los derechos reservados. Prohibida su distribución total o parcial, y cualquier obra derivada como lo define
-# The Free Software Foundation, a menos que sea para fines exclusivamente académicos. Este archivo se distribuye tal
-# cual, sin ninguna garantía implícita o explícita, excepto las aplicables por ley.
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 #
@@ -31,9 +39,11 @@ FIND_PROGRAM ( SDCCLIB_EXECUTABLE sdcclib )
 SET ( CMAKE_AR "${SDCCLIB_EXECUTABLE}" CACHE FILEPATH "The SDCC librarian" FORCE )
 
 # Las banderas (mínimas) para hacer funcionar nuestro SDCC
-SET ( CMAKE_C_FLAGS_INIT
-    "-m${COMPILER_PORT} -p${COMPILER_CPU} --std-sdcc11 --use-non-free --profile --peep-asm --opt-code-speed -V" )
-SET ( CMAKE_EXE_LINKER_FLAGS_INIT "--model-small" )
+SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free" )
+SET ( CMAKE_EXE_LINKER_FLAGS_INIT "" )
+SET ( CMAKE_C_FLAGS "--std-sdcc11" )
+SET ( CMAKE_C_FLAGS_RELEASE "--opt-code-speed --peep-asm --peep-return --less-pedantic" )
+SET ( CMAKE_C_FLAGS_DEBUG "--profile --debug-xtra --debug" )
 
 IF(NOT (DEFINED ENV{SDCC_HOME}) OR NOT (DEFINED ENV{SDCC_INCLUDE}) OR NOT (DEFINED ENV{SDCC_LIB}))
   MESSAGE ( WARNING "SDCC environment variables are not set. Your build may fail because of this.\n\

@@ -1,4 +1,4 @@
-﻿#===-- Platform/PIC14_FAMILY-PIC16F887-GPASM.cmake - Archivo de soporte de plataforma para CMake  -----*- CMake -*-===//
+﻿#===-- Platform/PIC14_SUPPORT.cmake - Archivo de soporte de plataforma para CMake  --------------------*- CMake -*-===//
 #
 # Copyright (c) 2018 Oever González
 #
@@ -16,13 +16,23 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 #
-# Da soporte a la familia, MCU y compilador que describe el nombre del archivo.
+# Configura el ensamblador y compilador de CMake desde las variables PIC_C_COMPILER y PIC_ASM_COMPILER.
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 
-# CMake no soporta muy bien GPASM. No importa, nosotros le damos soporte.
-SET ( GPASM_CONFIG ${CMAKE_CURRENT_LIST_DIR}/${CMAKE_SYSTEM_NAME}-${PIC_ASM_COMPILER}.cmake )
-# La CPU es determinada en el encabezado del archivo.L
-#SET ( COMPILER_CPU 16f887 )
-INCLUDE ( ${GPASM_CONFIG} )
+IF ( ${PIC_C_COMPILER} STREQUAL "SDCC" )
+  SET ( CMAKE_C_COMPILER sdcc )
+ELSEIF ( ${PIC_C_COMPILER} STREQUAL "XC8" )
+  MESSAGE ( FATAL_ERROR "We don't support XC8 yet." )
+ELSE ( )
+  MESSAGE ( FATAL_ERROR "Invalid PIC compiler." )
+ENDIF ( )
 
+IF ( ${PIC_ASM_COMPILER} STREQUAL "GPASM" )
+  SET ( CMAKE_ASM_COMPILER_ID "GPASM" )
+  SET ( CMAKE_ASM_COMPILER gpasm )
+ELSEIF ( ${PIC_C_COMPILER} STREQUAL "MPASM" )
+  MESSAGE ( FATAL_ERROR "We don't support MPASM yet." )
+ELSE ( )
+  MESSAGE ( FATAL_ERROR "Invalid PIC assembler." )
+ENDIF ( )

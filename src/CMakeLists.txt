@@ -1,4 +1,4 @@
-﻿#===-- Platform/PIC14_FAMILY-PIC16F887-GPASM.cmake - Archivo de soporte de plataforma para CMake  -----*- CMake -*-===//
+﻿#===-- src/CMakeLists.txt - Archivo de CMake  ---------------------------------------------------------*- CMake -*-===//
 #
 # Copyright (c) 2018 Oever González
 #
@@ -16,13 +16,16 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 #
-# Da soporte a la familia, MCU y compilador que describe el nombre del archivo.
+# Contiene la estructura de los archivos fuente del proyecto. En este archivo se incluyen todos los códigos fuente.
+# Se pueden agregar bibliotecas y multiples directorios. NUNCA debe modificarse el CMakeLists.txt raíz.
+#
+# Se pueden agregar cuantos ejecutables hagan falta, con cuantos archivos y bibliotecas hagan falta. Se pueden
+# "instalar" (es decir, poner todos los productos finales en un directorio), de esta forma se puede acceder fácilmente
+# al producto.
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 
-# CMake no soporta muy bien GPASM. No importa, nosotros le damos soporte.
-SET ( GPASM_CONFIG ${CMAKE_CURRENT_LIST_DIR}/${CMAKE_SYSTEM_NAME}-${PIC_ASM_COMPILER}.cmake )
-# La CPU es determinada en el encabezado del archivo.L
-#SET ( COMPILER_CPU 16f887 )
-INCLUDE ( ${GPASM_CONFIG} )
-
+# Agregar todos los archivos fuente al ejecutable
+ADD_EXECUTABLE ( firmware boot.asm )
+# Instalar (que es simplemente copiar) los archivos al directorio hex
+INSTALL ( TARGETS firmware DESTINATION hex )

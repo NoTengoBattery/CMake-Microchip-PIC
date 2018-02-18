@@ -182,5 +182,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Selector
+Selector.txt
+
+# Built
+built/
+
 
 # End of https://www.gitignore.io/api/kate,linux,macos,cmake,clion,mplabx,windows,codeblocks
