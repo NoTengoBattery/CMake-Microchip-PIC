@@ -41,7 +41,7 @@ SET ( CMAKE_AR "${SDCCLIB_EXECUTABLE}" CACHE FILEPATH "The SDCC librarian" FORCE
 # Las banderas (mínimas) para hacer funcionar nuestro SDCC
 SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free" )
 SET ( CMAKE_EXE_LINKER_FLAGS_INIT "" )
-SET ( CMAKE_C_FLAGS "--std-sdcc11" )
+SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT} --std-sdcc11" )
 SET ( CMAKE_C_FLAGS_RELEASE "--opt-code-speed --peep-asm --peep-return --less-pedantic" )
 SET ( CMAKE_C_FLAGS_DEBUG "--profile --debug-xtra --debug" )
 
