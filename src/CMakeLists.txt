@@ -26,6 +26,6 @@
 #===---------------------------------------------------------------------------------------------------------------===//
 
 # Agregar todos los archivos fuente al ejecutable
-ADD_EXECUTABLE ( firmware boot.asm )
+ADD_EXECUTABLE ( firmware  main.asm main.c )
 # Instalar (que es simplemente copiar) los archivos al directorio hex
 INSTALL ( TARGETS firmware DESTINATION hex )

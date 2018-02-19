@@ -69,6 +69,7 @@ ENDIF ( )
 
 # El proyecto se llama Firmware, escrito en los lenguajes C y ASM
 PROJECT ( ${PIC_PROJECT_NAME} ASM C )
+INCLUDE ( Platform/PIC14_CONFIG.cmake )
 
 # Agrega el subdirectorio /src donde viven todos los archivos de código fuente.
 ADD_SUBDIRECTORY ( src )

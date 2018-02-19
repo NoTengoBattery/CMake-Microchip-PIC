@@ -21,8 +21,7 @@
 #===---------------------------------------------------------------------------------------------------------------===//
 
 IF ( ${PIC_C_COMPILER} STREQUAL "SDCC" )
-  SET ( CMAKE_C_COMPILER sdcc )
-  SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --std-sdcc11" )
+  SET ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" )
   SET ( CMAKE_C_FLAGS_RELEASE "--opt-code-speed --peep-asm --peep-return --less-pedantic" )
   SET ( CMAKE_C_FLAGS_DEBUG "--profile --debug-xtra --debug" )
 ELSEIF ( ${PIC_C_COMPILER} STREQUAL "XC8" )
@@ -32,8 +31,6 @@ ELSE ( )
 ENDIF ( )
 
 IF ( ${PIC_ASM_COMPILER} STREQUAL "GPASM" )
-  SET ( CMAKE_ASM_COMPILER_ID "GPASM" )
-  SET ( CMAKE_ASM_COMPILER gpasm )
   SET ( CMAKE_ASM_FLAGS_RELEASE "--warning 1" )
   SET ( CMAKE_ASM_FLAGS_DEBUG "--dump --full-address" )
 ELSEIF ( ${PIC_C_COMPILER} STREQUAL "MPASM" )
