@@ -20,35 +20,18 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 
-# Extraído de: https://github.com/Kitware/CMake/blob/master/Modules/Platform/Generic-SDCC-C.cmake
-SET ( CMAKE_STATIC_LIBRARY_PREFIX )
-SET ( CMAKE_STATIC_LIBRARY_SUFFIX ".lib" )
-SET ( CMAKE_SHARED_LIBRARY_PREFIX )
-SET ( CMAKE_SHARED_LIBRARY_SUFFIX ".lib" )
-SET ( CMAKE_IMPORT_LIBRARY_PREFIX )
-SET ( CMAKE_IMPORT_LIBRARY_SUFFIX )
-SET ( CMAKE_EXECUTABLE_SUFFIX ".hex" )
-SET ( CMAKE_LINK_LIBRARY_SUFFIX ".lib" )
-SET ( CMAKE_DL_LIBS )
-SET ( CMAKE_C_OUTPUT_EXTENSION ".o" )
-
-# El archivador de SDCC
-GET_FILENAME_COMPONENT ( SDCC_LOCATION "${CMAKE_C_COMPILER}" PATH )
-FIND_PROGRAM ( SDCCLIB_EXECUTABLE sdcclib PATHS "${SDCC_LOCATION}" NO_DEFAULT_PATH )
-FIND_PROGRAM ( SDCCLIB_EXECUTABLE sdcclib )
-SET ( CMAKE_AR "${SDCCLIB_EXECUTABLE}" CACHE FILEPATH "The SDCC librarian" FORCE )
-
 # Las banderas (mínimas) para hacer funcionar nuestro SDCC
+SET ( CMAKE_C_OUTPUT_EXTENSION ".o" )
 SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free --std-sdcc11" )
 SET ( CMAKE_EXE_LINKER_FLAGS_INIT "" )
 
 IF(NOT (DEFINED ENV{SDCC_HOME}) OR NOT (DEFINED ENV{SDCC_INCLUDE}) OR NOT (DEFINED ENV{SDCC_LIB}))
   MESSAGE ( WARNING "SDCC environment variables are not set. Your build may fail because of this.\n\
-Try the following values:\n\
-\tSDCC_HOME=${SDCC_LOCATION}\n\
-\tSDCC_INCLUDE=${SDCC_LOCATION}/include\n\
-\tSDCC_LIB=${SDCC_LOCATION}/lib\n" )
+\tPlease, setup these variables: SDCC_HOME, SDCC_INCLUDE, SDCC_LIB" )
 ENDIF()
+
+GET_FILENAME_COMPONENT ( CMAKE_SDCC_HOME ${CMAKE_C_COMPILER} DIRECTORY )
+GET_FILENAME_COMPONENT ( CMAKE_SDCC_HOME ${CMAKE_SDCC_HOME} DIRECTORY )
 
 # If you have manually installed or built the tools, try to source this script. SDCC_HOME is the dir of your SDCC setup.
 # export SDCC_HOME=/usr/local/sdcc

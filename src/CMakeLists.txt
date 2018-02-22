@@ -1,4 +1,4 @@
-﻿#===-- src/CMakeLists.txt - Archivo de CMake  ---------------------------------------------------------*- CMake -*-===//
+#===-- src/CMakeLists.txt - Archivo de CMake  ---------------------------------------------------------*- CMake -*-===//
 #
 # Copyright (c) 2018 Oever González
 #
@@ -26,6 +26,6 @@
 #===---------------------------------------------------------------------------------------------------------------===//
 
 # Agregar todos los archivos fuente al ejecutable
-ADD_EXECUTABLE ( firmware  main.asm main.c )
+ADD_EXECUTABLE ( firmware main.c main.asm )
 # Instalar (que es simplemente copiar) los archivos al directorio hex
 INSTALL ( TARGETS firmware DESTINATION hex )

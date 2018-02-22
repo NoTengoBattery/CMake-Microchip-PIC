@@ -22,7 +22,6 @@
 
 # Las banderas (mínimas) para hacer funcionar nuestro GPASM
 SET ( CMAKE_ASM_FLAGS_INIT "--mpasm-compatible" )
-SET ( CMAKE_ASM_FLAGS "" )
 
 IF(NOT (DEFINED ENV{GPUTILS_HEADER_PATH}) OR NOT (DEFINED ENV{GPUTILS_LKR_PATH}) OR NOT (DEFINED ENV{GPUTILS_LIB_PATH}))
   MESSAGE ( WARNING "GPUTILS environment variables are not set. Your build may fail because of this.\n\

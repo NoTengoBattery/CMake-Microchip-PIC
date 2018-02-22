@@ -31,12 +31,12 @@ IF ( EXISTS "${C_CONFIG}" )
   INCLUDE ( ${C_CONFIG} )
 ELSE ( )
   MESSAGE ( FATAL_ERROR
-    "La configuración actual no está soportada. PIC:|${CMAKE_SYSTEM_PROCESSOR}| C:|${PIC_C_COMPILER}|" )
+    "Unsupported configuration. PIC:|${CMAKE_SYSTEM_PROCESSOR}| C:|${PIC_C_COMPILER}|" )
 ENDIF ( )
 # Verificar que existan los archivos de soporte
 IF ( EXISTS "${ASM_CONFIG}" )
   INCLUDE ( ${ASM_CONFIG} )
 ELSE ( )
   MESSAGE ( FATAL_ERROR
-    "La configuración actual no está soportada. PIC:|${CMAKE_SYSTEM_PROCESSOR}| ASM:|${PIC_ASM_COMPILER}|" )
+    "Unsupported configuration. PIC:|${CMAKE_SYSTEM_PROCESSOR}| ASM:|${PIC_ASM_COMPILER}|" )
 ENDIF ( )

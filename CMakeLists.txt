@@ -56,7 +56,7 @@ INCLUDE ( Selector.txt )
 # Define el sistema. Este sistema no es soportado oficialmente por CMake, así que yo le daré soporte.
 SET ( CMAKE_SYSTEM_NAME PIC14_FAMILY )
 # Donde van los archivos terminados
-SET ( CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/built )
+SET ( CMAKE_INSTALL_PREFIX built )
 
 # CMake soporta SDCC, es fácil: tan solo se configura CMAKE_C_COMPILER como sdcc y listo. El asunto es que no pretendo
 # hacerlo directamente aquí. Los archivos de plataforma deberían configurar esto dado un compilador compatible aquí.
@@ -69,7 +69,6 @@ ENDIF ( )
 
 # El proyecto se llama Firmware, escrito en los lenguajes C y ASM
 PROJECT ( ${PIC_PROJECT_NAME} ASM C )
-INCLUDE ( Platform/PIC14_CONFIG.cmake )
 
 # Agrega el subdirectorio /src donde viven todos los archivos de código fuente.
 ADD_SUBDIRECTORY ( src )

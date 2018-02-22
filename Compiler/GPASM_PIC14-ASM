@@ -16,17 +16,25 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 #
-# Repara las extensiones de archivo soportadas por GPASM. Si hay algún otro detalle específico a GPASM, es aquí donde
-# debe repararse.
+# Da soporte para PIC14 mediante GPUTILS para CMake.
 #
 #===---------------------------------------------------------------------------------------------------------------===//
+
+MESSAGE ( STATUS "GPASM-PIC14 support for CMake" )
 
 SET ( CMAKE_ASM_OUTPUT_EXTENSION ".o" )
 SET ( CMAKE_ASM_SOURCE_FILE_EXTENSIONS asm )
 SET ( CMAKE_ASM_COMPILE_OBJECT
   "<CMAKE_ASM_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -o <OBJECT> -c <SOURCE>" )
 SET ( CMAKE_ASM_LINK_EXECUTABLE
-  "<CMAKE_C_COMPILER> ${CMAKE_C_FLAGS_INIT} <OBJECTS> -o <TARGET> <CMAKE_ASM_LINK_FLAGS> <LINK_FLAGS> <LINK_LIBRARIES>")
+  "<CMAKE_C_COMPILER> ${CMAKE_C_FLAGS} <OBJECTS> -o <TARGET> <CMAKE_ASM_LINK_FLAGS> <LINK_FLAGS> <LINK_LIBRARIES>")
 
-
+SET ( CMAKE_ASM_FLAGS_DEBUG "--dump --full-address"
+    CACHE STRING "FLAGS")
+SET ( CMAKE_ASM_FLAGS_RELEASE "--warning 1"
+    CACHE STRING "FLAGS" )
+SET ( CMAKE_ASM_FLAGS_RELWITHDEBINFO "${CMAKE_ASM_FLAGS_DEBUG} ${CMAKE_ASM_FLAGS_RELEASE}"
+    CACHE STRING "FLAGS" )
+SET ( CMAKE_ASM_FLAGS_MINSIZEREL ""
+    CACHE STRING "FLAGS" )
 
