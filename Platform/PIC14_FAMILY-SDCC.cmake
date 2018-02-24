@@ -22,7 +22,7 @@
 
 # Las banderas (mínimas) para hacer funcionar nuestro SDCC
 SET ( CMAKE_C_OUTPUT_EXTENSION ".o" )
-SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free --std-sdcc11" )
+SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free --std-sdcc11 --vc" )
 SET ( CMAKE_EXE_LINKER_FLAGS_INIT "" )
 
 IF(NOT (DEFINED ENV{SDCC_HOME}) OR NOT (DEFINED ENV{SDCC_INCLUDE}) OR NOT (DEFINED ENV{SDCC_LIB}))

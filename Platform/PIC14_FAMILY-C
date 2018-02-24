@@ -34,12 +34,19 @@ IF ( ${PIC_C_COMPILER} STREQUAL "SDCC" )
     SET ( CMAKE_C_OUTPUT_EXTENSION ".o"
     CACHE STRING "EXTENSION" )
     
-    SET ( CMAKE_C_FLAGS_DEBUG "--profile --debug-xtra --debug"
+    IF ( ${PIC_ASM_COMPILER} STREQUAL "GPASM" )
+        SET ( ASM_DEBUG_FLAGS 
+            "-Wa,--full-address -Wl,-c -Wl,-m" )
+        SET ( ASM_RELEASE_FLAGS
+            "-Wl,-b -Wl,3 -Wl,-p -Wl,3 -Wl,-O -Wl,3" )
+    ENDIF ( )
+    
+    SET ( CMAKE_C_FLAGS_DEBUG "--profile --debug-xtra --debug --cyclomatic --verbose ${ASM_DEBUG_FLAGS}"
         CACHE STRING "FLAGS" )
-    SET ( CMAKE_C_FLAGS_RELEASE "--opt-code-speed --peep-asm --peep-return --less-pedantic"
+    SET ( CMAKE_C_FLAGS_RELEASE "--opt-code-speed --peep-asm --peep-return --less-pedantic ${ASM_RELEASE_FLAGS}"
         CACHE STRING "FLAGS" )
-    SET ( CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_DEBUG} ${CMAKE_C_FLAGS_DEBUG}"
+    SET ( CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_DEBUG} ${CMAKE_C_FLAGS_RELEASE}"
         CACHE STRING "FLAGS" )
-    SET ( CMAKE_C_FLAGS_MINSIZEREL "--opt-code-size --less-pedantic"
+    SET ( CMAKE_C_FLAGS_MINSIZEREL "--opt-code-size --less-pedantic --fomit-frame-pointer ${ASM_RELEASE_FLAGS}"
         CACHE STRING "FLAGS" )
 ENDIF ()
