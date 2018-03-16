@@ -25,6 +25,20 @@ SET ( CMAKE_C_OUTPUT_EXTENSION ".o" )
 SET ( CMAKE_C_FLAGS_INIT "-m${COMPILER_PORT} -p${COMPILER_CPU} --use-non-free --std-sdcc11 --vc" )
 SET ( CMAKE_EXE_LINKER_FLAGS_INIT "" )
 
+SET ( SDCC_MINVER 3.7.1 )
+EXECUTE_PROCESS ( COMMAND ${CMAKE_C_COMPILER} -v OUTPUT_VARIABLE SDCC_VER )
+
+IF ( NOT "${SDCC_VER}" STREQUAL "" )
+    MESSAGE( STATUS "Checking SDCC version..." )
+    STRING ( REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+" SDCC_VER ${SDCC_VER} )
+    IF ( ${SDCC_VER} VERSION_LESS ${SDCC_MINVER} )
+        MESSAGE ( FATAL_ERROR
+        "SDCC version ${SDCC_MINVER} or greater is needed to use this build system, but found ${SDCC_VER}." )
+    ENDIF()
+ELSE()
+    MESSAGE( FATAL_ERROR "The SDCC version string returned nothing. Maybe SDCC is not in PATH." )
+ENDIF()
+
 IF(NOT (DEFINED ENV{SDCC_HOME}) OR NOT (DEFINED ENV{SDCC_INCLUDE}) OR NOT (DEFINED ENV{SDCC_LIB}))
   MESSAGE ( WARNING "SDCC environment variables are not set. Your build may fail because of this.\n\
 \tPlease, setup these variables: SDCC_HOME, SDCC_INCLUDE, SDCC_LIB" )

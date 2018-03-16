@@ -21,9 +21,18 @@
 #===---------------------------------------------------------------------------------------------------------------===//
 
 # Las banderas (mínimas) para hacer funcionar nuestro GPASM
-SET ( CMAKE_ASM_FLAGS_INIT "--mpasm-compatible" )
+SET ( CMAKE_ASM_FLAGS_INIT "" )
 
-IF(NOT (DEFINED ENV{GPUTILS_HEADER_PATH}) OR NOT (DEFINED ENV{GPUTILS_LKR_PATH}) OR NOT (DEFINED ENV{GPUTILS_LIB_PATH}))
+SET ( GPUTILS_MINVER 1.5.2 )
+EXECUTE_PROCESS ( COMMAND ${CMAKE_ASM_COMPILER} -v ERROR_VARIABLE GPUTILS_VER )
+
+STRING ( REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+" GPUTILS_VER ${GPUTILS_VER} )
+IF ( ${GPUTILS_VER} VERSION_LESS ${GPUTILS_MINVER} )
+  MESSAGE ( FATAL_ERROR
+    "GPUTILS version ${GPUTILS_MINVER} or greater is needed to use this build system, but found ${GPUTILS_VER}." )
+ENDIF()
+
+IF(NOT (DEFINED ENV{GPUTILS_HEADER_PATH}) OR NOT (DEFINED ENV{GPUTILS_LKR_PATH}))
   MESSAGE ( WARNING "GPUTILS environment variables are not set. Your build may fail because of this.\n\
 Please, setup these variables: GPUTILS_HEADER_PATH, GPUTILS_LKR_PATH, GPUTILS_LIB_PATH" )
 ENDIF()

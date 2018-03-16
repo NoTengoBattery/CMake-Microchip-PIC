@@ -36,7 +36,7 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 
-CMAKE_MINIMUM_REQUIRED ( VERSION 3.10 )
+CMAKE_MINIMUM_REQUIRED ( VERSION 3.9 )
 
 INCLUDE ( Selector.txt )
 # In Selector.txt (a file created in the root directory, whiere this one lives), you setup your target.
