@@ -25,7 +25,9 @@
 #
 #===---------------------------------------------------------------------------------------------------------------===//
 
-# Agregar todos los archivos fuente al ejecutable
+# Here you put all your files and executables. You can use this folder as template for more executables.
+# You should have at least minimum knowledge about CMake, so you can customize your build.
 ADD_EXECUTABLE ( firmware main.c main.asm )
-# Instalar (que es simplemente copiar) los archivos al directorio hex
+
+# You can "install" your .hex so it's easy to find.
 INSTALL ( TARGETS firmware DESTINATION hex )
