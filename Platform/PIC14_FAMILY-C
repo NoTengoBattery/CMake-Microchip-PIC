@@ -24,37 +24,54 @@ IF ( ${PIC_C_COMPILER} STREQUAL "SDCC" )
     MESSAGE ( STATUS "SDCC-PIC14 support for CMake" )
     
     SET ( CMAKE_STATIC_LIBRARY_SUFFIX ".lib" 
-    CACHE STRING "EXTENSION" )
+    CACHE STRING "Static library extension" )
+    MARK_AS_ADVANCED ( CMAKE_STATIC_LIBRARY_SUFFIX )
     SET ( CMAKE_SHARED_LIBRARY_SUFFIX ".lib" 
-    CACHE STRING "EXTENSION" )
+    CACHE STRING "Shared library extension" )
+    MARK_AS_ADVANCED ( CMAKE_SHARED_LIBRARY_SUFFIX )
     SET ( CMAKE_EXECUTABLE_SUFFIX ".hex" 
-    CACHE STRING "EXTENSION" )
+    CACHE STRING "Executable extension" )
+    MARK_AS_ADVANCED ( CMAKE_EXECUTABLE_SUFFIX )
     SET ( CMAKE_LINK_LIBRARY_SUFFIX ".lib"
-    CACHE STRING "EXTENSION"  )
+    CACHE STRING "Link library suffix"  )
+    MARK_AS_ADVANCED ( CMAKE_LINK_LIBRARY_SUFFIX )
     SET ( CMAKE_C_OUTPUT_EXTENSION ".o"
-    CACHE STRING "EXTENSION" )
+    CACHE STRING "C object file extension" )
+    MARK_AS_ADVANCED ( CMAKE_C_OUTPUT_EXTENSION )
     
+    GET_FILENAME_COMPONENT ( SDCC_LOCATION "${CMAKE_C_COMPILER}" PATH )
+    FIND_PROGRAM ( SDCCLIB_EXECUTABLE sdcclib PATHS "${SDCC_LOCATION}" NO_DEFAULT_PATH )
+    FIND_PROGRAM ( SDCCLIB_EXECUTABLE sdcclib )
+    SET ( CMAKE_AR "${SDCCLIB_EXECUTABLE}" CACHE FILEPATH "The sdcc librarian" FORCE )
+    MARK_AS_ADVANCED ( SDCCLIB_EXECUTABLE )
+
     IF ( ${PIC_ASM_COMPILER} STREQUAL "GPASM" )
         SET ( ASM_DEBUG_FLAGS 
             "-Wa,--dump -Wa,--full-address -Wa,--object -Wl,--object -Wl,--map -Wl,--strict -Wl,2" )
         SET ( ASM_RELEASE_FLAGS
             "-Wa,--object -Wl,--object -Wl,--strict -Wl,2" )
+    ELSE ( )
+        MESSSGE ( FATAL_ERROR "SDCC compiler requieres GPASM binutils." )
     ENDIF ( )
-    
+
     SET ( CMAKE_C_FLAGS_DEBUG 
         "--profile --debug-xtra --debug --cyclomatic --verbose" )
     SET ( CMAKE_C_FLAGS_RELEASE 
         "--opt-code-speed --less-pedantic --peep-asm --peep-return --allow-unsafe-read" )
     SET ( CMAKE_C_FLAGS_RELWITHDEBINFO
         "${CMAKE_C_FLAGS_DEBUG} ${CMAKE_C_FLAGS_RELEASE} ${ASM_DEBUG_FLAGS}"
-        CACHE STRING "FLAGS" )
+        CACHE STRING "CMake C flags for RelWithDebInfo" )
+    MARK_AS_ADVANCED ( CMAKE_C_FLAGS_RELWITHDEBINFO )
     SET ( CMAKE_C_FLAGS_DEBUG 
         "${CMAKE_C_FLAGS_DEBUG} ${ASM_DEBUG_FLAGS}"
-        CACHE STRING "FLAGS" )
+        CACHE STRING "CMake C flags for Debug" )
+        MARK_AS_ADVANCED ( CMAKE_C_FLAGS_DEBUG )
     SET ( CMAKE_C_FLAGS_RELEASE
         "${CMAKE_C_FLAGS_RELEASE} ${ASM_RELEASE_FLAGS}"
-        CACHE STRING "FLAGS" )
+        CACHE STRING "CMake C flags for Release" )
+        MARK_AS_ADVANCED ( CMAKE_C_FLAGS_RELEASE )
     SET ( CMAKE_C_FLAGS_MINSIZEREL
         "--opt-code-size --less-pedantic --fomit-frame-pointer ${ASM_RELEASE_FLAGS}"
-        CACHE STRING "FLAGS" )
+        CACHE STRING "CMake C flags for MinSizeRel" )
+        MARK_AS_ADVANCED ( CMAKE_C_FLAGS_MINSIZEREL )
 ENDIF ()

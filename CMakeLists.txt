@@ -55,8 +55,10 @@ INCLUDE ( Selector.txt )
 
 # Define el sistema. Este sistema no es soportado oficialmente por CMake, así que yo le daré soporte.
 SET ( CMAKE_SYSTEM_NAME PIC14_FAMILY )
+SET ( CMAKE_CROSSCOMPILING ON )
 # Donde van los archivos terminados
-SET ( CMAKE_INSTALL_PREFIX built )
+SET ( CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/built" CACHE STRING "Default install path for .hex files" )
+MARK_AS_ADVANCED ( CMAKE_INSTALL_PREFIX )
 
 # CMake soporta SDCC, es fácil: tan solo se configura CMAKE_C_COMPILER como sdcc y listo. El asunto es que no pretendo
 # hacerlo directamente aquí. Los archivos de plataforma deberían configurar esto dado un compilador compatible aquí.
