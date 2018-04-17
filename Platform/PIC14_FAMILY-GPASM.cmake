@@ -21,7 +21,7 @@
 #===---------------------------------------------------------------------------------------------------------------===//
 
 # Las banderas (mínimas) para hacer funcionar nuestro GPASM
-SET ( CMAKE_ASM_FLAGS_INIT "" )
+SET ( CMAKE_ASM_FLAGS_INIT "-p16f887" )
 
 SET ( GPUTILS_MINVER 1.5.2 )
 EXECUTE_PROCESS ( COMMAND ${CMAKE_ASM_COMPILER} -v ERROR_VARIABLE GPUTILS_VER )
@@ -31,6 +31,14 @@ IF ( ${GPUTILS_VER} VERSION_LESS ${GPUTILS_MINVER} )
   MESSAGE ( FATAL_ERROR
     "GPUTILS version ${GPUTILS_MINVER} or greater is needed to use this build system, but found ${GPUTILS_VER}." )
 ENDIF()
+
+
+FIND_PROGRAM ( GPLIB_EXECUTABLE gplib )
+SET ( CMAKE_AR "${GPLIB_EXECUTABLE}" CACHE FILEPATH "The GPLIB librarian" FORCE )
+SET ( CMAKE_RANLIB "${GPLIB_EXECUTABLE}" CACHE FILEPATH "The GPLIB librarian" FORCE )
+MARK_AS_ADVANCED ( SDCCLIB_EXECUTABLE )
+SET ( CMAKE_C_ARCHIVE_FINISH   "<CMAKE_RANLIB> -q -s <TARGET>" )
+SET ( CMAKE_C_ARCHIVE_CREATE "<CMAKE_AR> -c <TARGET> <LINK_FLAGS> <OBJECTS>" )
 
 IF(NOT (DEFINED ENV{GPUTILS_HEADER_PATH}) OR NOT (DEFINED ENV{GPUTILS_LKR_PATH}))
   MESSAGE ( WARNING "GPUTILS environment variables are not set. Your build may fail because of this.\n\

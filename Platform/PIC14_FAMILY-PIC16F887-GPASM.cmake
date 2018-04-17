@@ -23,6 +23,6 @@
 # CMake no soporta muy bien GPASM. No importa, nosotros le damos soporte.
 SET ( GPASM_CONFIG ${CMAKE_CURRENT_LIST_DIR}/${CMAKE_SYSTEM_NAME}-${PIC_ASM_COMPILER}.cmake )
 # La CPU es determinada en el encabezado del archivo.L
-#SET ( COMPILER_CPU 16f887 )
+SET ( COMPILER_CPU 16f887 )
 INCLUDE ( ${GPASM_CONFIG} )
 
